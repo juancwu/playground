@@ -4,13 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <style>
+      .offline {
+        color: red;
+        text-decoration: line-through;
+      }
+
+      .online {
+        color: green;
+      }
+
+      code {
+        background-color: #eee;
+      }
+    </style>
+    <title>Simple WebRTC Example</title>
   </head>
   <body>
-    <h1></h1>
+    <h1>My ID: <span id="myId"></span></h1>
+    <h3>Status: <span id="status">init</span></h3>
     <input type="text" name="peerId" id="peerId" />
     <button>Connect</button>
-    <!-- <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script> -->
+    <p>Use console to send data using variable <code>dc.send($data);</code>.</p>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/index.js"></script>
   </body>

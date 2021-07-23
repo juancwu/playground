@@ -6,43 +6,38 @@ const app = express();
 const io = new ioServer();
 const server = app.listen(8080);
 
-const table = {};
+const sockets = {};
 
 app.use(express.static(path.join(__dirname, "public")));
 
 io.attach(server);
 
 io.on("connection", (socket) => {
-  table[socket.id] = socket;
+  sockets[socket.id] = socket;
   socket.emit("greetings", "Hello from server.", socket.id);
 
   socket.broadcast.emit("new-peer", socket.id);
 
   socket.on("find-peers", (id, cb) => {
-    let peers = Object.keys(table).filter((peerId) => peerId !== id);
+    let peers = Object.keys(sockets).filter((peerId) => peerId !== id);
 
-    if (peers.length) cb(peers);
+    cb([...peers]);
   });
 
-  // send offer to peer list
-  socket.on("offer", ({ offer, from, target }) => {
-    io.to(target).emit("offer", { offer, from });
+  socket.on("ping-peer", (id, cb) => {
+    cb(typeof sockets[id] !== "undefined");
   });
 
-  socket.on("answer", ({ answer, from, target }) => {
-    io.to(target).emit("answer", { answer, from });
+  socket.on("offer", (offer, target, from) => {
+    io.to(target).emit("offer", offer, from);
   });
 
-  socket.on("candidate", ({ candidate, target, from }) => {
-    io.to(target).emit("candidate", candidate, from);
-  });
-
-  socket.on("ping-peer", (peerId, cb) => {
-    let connected = typeof table[peerId] !== "undefined";
-    cb(connected);
+  socket.on("answer", (answer, target) => {
+    io.to(target).emit("answer", answer);
   });
 
   socket.on("disconnect", () => {
-    delete table[socket.id];
+    delete sockets[socket.id];
+    socket.broadcast.emit("bye-peer", socket.id);
   });
 });
