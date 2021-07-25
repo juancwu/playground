@@ -1,0 +1,13 @@
+{
+  "name": "P2P-FS",
+  "short_name": "Pear-Pear File Share",
+  "icons": [
+    {
+      "src": "google-touch-icon.png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "display": "fullscreen"
+}

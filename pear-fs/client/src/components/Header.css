@@ -1,0 +1,35 @@
+header {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+}
+
+header.active {
+  background-color: #2a2e35;
+  box-shadow: rgba(0, 0, 0, 0.05) 0 6px 24px 0, rgba(0, 0, 0, 0.08) 0 0 0 1px;
+  color: #fff;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  padding: 0.5em;
+  text-align: center;
+  transition: all 250ms;
+  width: 100%;
+  z-index: 9;
+}
+
+.logo-wrapper {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  text-align: center;
+  margin-left: 4em;
+}
+
+.logo-wrapper > img {
+  margin-right: 1em;
+  height: 30px;
+}
+
+.logo-wrapper > p {
+  font-weight: 600;
+  text-transform: uppercase;
+}
