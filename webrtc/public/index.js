@@ -22,7 +22,9 @@ function connectToPeer() {
     peer = new RTCPeerConnection();
 
     peer.onicecandidate = (e) => {
-      // not sure why we want to return, just following https://owebio.github.io/serverless-webrtc-chat/noserv.create.html
+      // e.candidate is an empty string when RTCIceCandidate is an 'end of candidates'
+      // meaning that no more candidates are to be added.
+      // therefore, we do not signal until all candidates are added.
       if (e.candidate) return;
 
       // when this event is triggered, the local description is likely to have changed.
@@ -82,7 +84,7 @@ socket.on("offer", async (offer, from) => {
   peer = new RTCPeerConnection();
 
   peer.onicecandidate = (e) => {
-    if (e.candidate) return; // again, not sure why 🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️
+    if (e.candidate) return;
   };
 
   peer.oniceconnectionstatechange = (e) => {
