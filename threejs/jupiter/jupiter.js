@@ -16,7 +16,7 @@ if (WEBGL.isWebGLAvailable()) {
 
   const jupiter = new THREE.Mesh(
     new THREE.SphereGeometry(0.8, 32, 32),
-    new THREE.MeshPhongMaterial({
+    new THREE.MeshLambertMaterial({
       map: new THREE.TextureLoader().load("./jupiter-surface.jpeg"),
     })
   );
