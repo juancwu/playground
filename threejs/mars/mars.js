@@ -23,7 +23,7 @@ if (WEBGL.isWebGLAvailable()) {
     })
   );
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
   const pointLight = new THREE.PointLight(0xffffff, 1);
   pointLight.position.set(5, 3, 5);
 
