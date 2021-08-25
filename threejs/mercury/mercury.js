@@ -17,7 +17,9 @@ if (WEBGL.isWebGLAvailable()) {
   const mercury = new THREE.Mesh(
     new THREE.SphereGeometry(0.6, 32, 32),
     new THREE.MeshPhongMaterial({
-      map: new THREE.TextureLoader().load("./mercury.jpeg"),
+      map: new THREE.TextureLoader().load("./mercury-surface.jpg"),
+      bumpMap: new THREE.TextureLoader().load("./mercury-bump-map.jpg"),
+      bumpScale: 0.05,
     })
   );
 
