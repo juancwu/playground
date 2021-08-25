@@ -45,8 +45,8 @@ if (WEBGL.isWebGLAvailable()) {
 
   function animate() {
     window.requestAnimationFrame(animate);
-    earth.rotation.y -= 0.0015;
-    clouds.rotation.y -= 0.001;
+    earth.rotation.y += 0.0015;
+    clouds.rotation.y += 0.001;
     renderer.render(scene, camera);
   }
   animate();
