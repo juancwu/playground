@@ -35,7 +35,7 @@ if (WEBGL.isWebGLAvailable()) {
 
   function animate() {
     window.requestAnimationFrame(animate);
-    mars.rotation.y -= 0.0015;
+    mars.rotation.y += 0.0015;
     renderer.render(scene, camera);
   }
   animate();
