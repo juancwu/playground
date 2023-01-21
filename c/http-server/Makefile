@@ -1,12 +1,12 @@
 CC=gcc
 
-all: socket-server socket-client
+all: http-server http-client
 
-socket-server: socket-server.c
-	$(CC) socket-server.c -o socket-server
+http-server: http-server.c
+	$(CC) http-server.c -o http-server
 
-socket-client: socket-client.c
-	$(CC) socket-client.c -o socket-client
+http-client: http-client.c
+	$(CC) http-client.c -o http-client
 
 clean:
-	rm -f socket-server socket-client
+	rm -f http-server http-client
