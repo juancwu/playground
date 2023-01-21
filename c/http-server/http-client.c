@@ -16,7 +16,7 @@ int main(int argc, char **args) {
     int sockfd, portno, n;
     struct sockaddr_in serv_addr;
     struct hostent *server;
-    char buffer[256];
+    char buffer[1024];
     if (argc < 3) {
         fprintf(stderr, "usage %s hostname port\n", args[0]);
         exit(1);
@@ -32,7 +32,7 @@ int main(int argc, char **args) {
         exit(1);
     }
 
-    bzero((char *) &serv_addr, sizeof(serv_addr));
+    memset((char *) &serv_addr, 0, sizeof(serv_addr));
     serv_addr.sin_family = AF_INET;
     bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr, server->h_length);
     serv_addr.sin_port = htons(portno);
@@ -40,17 +40,16 @@ int main(int argc, char **args) {
     if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
         error("ERROR connecting\n");
 
-    printf("Please enter the message: ");
-    bzero(buffer, 256);
-    fgets(buffer, 255, stdin);
+    memset(buffer, 0, sizeof(buffer));
+    strcpy(buffer, "GET / HTTP/1.1\r\n");
     n = write(sockfd, buffer, strlen(buffer));
     if (n < 0) error("ERROR writing to socket\n");
 
-    bzero(buffer, 256);
-    n = read(sockfd, buffer, 255);
-    if (n < 0) error("ERROR reading from socket\n");
-
-    printf("%s\n", buffer);
+    memset(buffer, 0, sizeof(buffer));
+    while ((n = recv(sockfd, buffer, 1024, 0) > 0)) {
+        printf("%s\n", buffer);
+        memset(buffer, 0, sizeof(buffer));
+    }
 
     close(sockfd);
 
