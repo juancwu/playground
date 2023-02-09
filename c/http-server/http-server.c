@@ -11,6 +11,8 @@ void error(const char *msg) {
     exit(1);
 }
 
+int resolve
+
 int main (int argc, char **argv) {
     int sockfd, clientfd, portno;
     socklen_t clilen;
