@@ -1,7 +1,10 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const { Client } = require("@notionhq/client");
 
 admin.initializeApp();
+const config = functions.config();
+const notion = new Client({ auth: config.env.notion.key });
 
 exports.addMessage = functions.https.onRequest(async (req, res) => {
   const original = req.query.text;
@@ -30,3 +33,15 @@ exports.makeUppercase = functions.firestore
     // Setting an 'uppercase' field in Firestore document returns a Promise.
     return snap.ref.set({ uppercase }, { merge: true });
   });
+
+exports.queryDatabase = functions.https.onRequest(async (req, res) => {
+  try {
+    const database = await notion.databases.retrieve({
+      database_id: config.env.notion.database_id,
+    });
+    res.status(200).json(database);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({});
+  }
+});
